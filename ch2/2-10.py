@@ -1,21 +1,28 @@
-""" 자연수 N 이하 소수를 나열하기 """
+""" 1,000 이하의 소수를 나열하기(알고리즘 개선 2) """
 
-## 소수 : N의 제곱근 이하의 어떤 소수로도 나누어 떨어지지 않음
+counter = 0 # 곱셈, 나눗셈 실행 횟수를 나타내는 변수
+ptr = 0
+prime = [None] * 500
 
-N = int(input())
+prime[ptr] = 2
+ptr += 1
 
-prime = [None] * N
-prime[0:2] = 2, 3
-prime_idx = 2
+prime[ptr] = 3
+ptr += 1
 
-for num in range(5, N+1, 2): ## 홀수만 처리
-    idx = 0
-    while prime[idx]*prime[idx] <= num:
-        if num % prime[idx] == 0:
+for n in range(5, 1001, 2):
+    i = 1
+    while prime[i]*prime[i] < n: 
+        counter += 2
+        if n % prime[i] == 0:
             break
-        idx += 1
+        i += 1
     else:
-        prime[prime_idx] = num
-        prime_idx += 1
+        prime[ptr] = n
+        ptr += 1
+        counter += 1
 
-print([num for num in prime if num is not None])
+for l in range(ptr):
+    print(prime[l])
+
+print(f'소수 탐색 연산 수 : {counter}')
